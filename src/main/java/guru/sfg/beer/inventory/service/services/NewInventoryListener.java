@@ -10,7 +10,7 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Nuno Martins
+ * Created by jt on 2019-07-21.
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -20,7 +20,8 @@ public class NewInventoryListener {
     private final BeerInventoryRepository beerInventoryRepository;
 
     @JmsListener(destination = JmsConfig.NEW_INVENTORY_QUEUE)
-    public void listen(NewInventoryEvent event) {
+    public void listen(NewInventoryEvent event){
+
         log.debug("Got Inventory: " + event.toString());
 
         beerInventoryRepository.save(BeerInventory.builder()
@@ -29,4 +30,5 @@ public class NewInventoryListener {
                 .quantityOnHand(event.getBeerDto().getQuantityOnHand())
                 .build());
     }
+
 }
